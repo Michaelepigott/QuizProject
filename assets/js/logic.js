@@ -1,8 +1,9 @@
+// variables to keep track of quiz
 var currentQuestionIndex = 0;
 var time = questions.length * 15;
 var timerId;
 
-
+// references to dom elements
 var questionsEl = document.getElementById('questions');
 var timerEl = document.getElementById('time');
 var choicesEl = document.getElementById('choices');
@@ -13,13 +14,14 @@ var feedbackEl = document.getElementById('feedback');
 
 
 function startQuiz() {
+    //hide start button
     var startScreenEl = document.getElementById('start-screen');
     startScreenEl.setAttribute('class', 'hide');
-
+//unhide questions
     questionsEl.removeAttribute('class');
-
-    timerId = setINterval(clockTick, 1000);
-
+//start timer
+    timerId = setInterval(clockTick, 1000);
+//show timer
     timerEl.textcontent = time;
 
     getQuestion();
@@ -34,11 +36,14 @@ function getQuestion () {
     choicesEl.innerHTML = '';
 
 
-    for(var i = 0; i < currentQuestion.choices.length; i++;){
-        cvar choice = currentQuestion.choices[i];
+    for(var i = 0; i < currentQuestion.choices.length; i++) {
+        //create button for each choice
+        var choice = currentQuestion.choices[i];
         var choiceNode = document.createElement('button');
+        choiceNode.setAttribute('class','choice');
+        choiceNode.setAttribute('value', choice);
 
-        choiceNode.textContent = i + 1 + '. ' choice;
+        choiceNode.textContent = i + 1 + '. ' + choice;
 
         choicesEl.appendChild(choiceNode);
     }
@@ -62,7 +67,7 @@ function questionClick(event) {
     }
     currentQuestionIndex ++;
 
-    if (time <= 0 ++ currentQuestionIndex === questions.length) {
+    if (time <= 0 || currentQuestionIndex === questions.length) {
         quizEnd();
     } else {
         getQuestion();
@@ -96,7 +101,7 @@ function clockTick() {
     }
 }
 
-funciton saveHighscore() {
+function saveHighscores() {
     //get inpput box value
 var initials = initialsEl.value.trim();
 //if not empty
@@ -120,6 +125,7 @@ if (initials !== '') {
 
 function checkForEnter(event){
     if (event.key === 'enter') {
-        saveHighscore();
+        saveHighscores();
     }
 }
+
